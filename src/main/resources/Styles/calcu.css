@@ -1,0 +1,18 @@
+.button{
+    -fx-background-color: #6184de;
+    -fx-text-fill: white;
+    -fx-border-color: #ffffff;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    /*-fx-padding: 60, 10, 15, 60;*/
+}
+
+.button:hover{
+    -fx-background-color: #1100ff;
+}
+
+#fontButton{
+    -fx-font: bold italic "Arial";
+    -fx-background-color: #000000;
+    -fx-text-fill: #000000;
+}
