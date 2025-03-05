@@ -1,5 +1,10 @@
 package org.example.tap2025.modelos;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
 public class ClientesDao {
 
     private int idCte;
@@ -8,26 +13,20 @@ public class ClientesDao {
     private String direccion;
     private String emailCte;
 
-    public String getEmailCte() {
-        return emailCte;
-    }
-    public void INSERT(){}
-        String query = "INSERT INTO clientes(nomCte, telCte, direccion, emailCte) " +
-                "values('"+nomCte+"','"+telCte+"','"+direccion+"','"+emailCte+"')";
-    public void UPDATE(){}
-    public void DELETE(){}
-    public void SELECT(){}
-
-    public void setEmailCte(String emailCte) {
-        this.emailCte = emailCte;
+    public int getIdCte() {
+        return idCte;
     }
 
-    public String getDireccion() {
-        return direccion;
+    public void setIdCte(int idCte) {
+        this.idCte = idCte;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public String getNomCte() {
+        return nomCte;
+    }
+
+    public void setNomCte(String nomCte) {
+        this.nomCte = nomCte;
     }
 
     public String getTelCte() {
@@ -38,11 +37,75 @@ public class ClientesDao {
         this.telCte = telCte;
     }
 
-    public int getIdCte() {
-        return idCte;
+    public String getDireccion() {
+        return direccion;
     }
 
-    public void setIdCte(int idCte) {
-        this.idCte = idCte;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getEmailCte() {
+        return emailCte;
+    }
+
+    public void setEmailCte(String emailCte) {
+        this.emailCte = emailCte;
+    }
+
+    public void INSERT() {
+        String query = "INSERT INTO clientes(nomCte,telCte,direccion,emailCte) " +
+                "values('" + nomCte + "','" + telCte + "','" + direccion + "','" + emailCte + "')";
+        try {
+            Statement stmt = conexion.connection.createStatement();
+            stmt.executeUpdate(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void UPDATE() {
+        String query = "UPDATE clientes SET nomCte = '" + nomCte + "'," +
+                "telCte = '" + telCte + "',direccion = '" + direccion + "'," +
+                "emailCte = '" + emailCte + "' WHERE idCte = " + idCte;
+        try {
+            Statement stmt = conexion.connection.createStatement();
+            stmt.executeUpdate(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void DELETE() {
+        String query = "DELETE FROM clientes WHERE idCte = " + idCte;
+        try {
+            Statement stmt = conexion.connection.createStatement();
+            stmt.executeUpdate(query);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ObservableList<ClientesDao> SELECT() {
+        String query = "SELECT * FROM clientes";
+        ObservableList<ClientesDao> listaC = FXCollections.observableArrayList();
+        ClientesDao objC;
+        try {
+            Statement stmt = conexion.connection.createStatement();
+            ResultSet res = stmt.executeQuery(query);
+            while (res.next()) {
+                objC = new ClientesDao();
+                objC.setIdCte(res.getInt("idCte"));
+                objC.setNomCte(res.getString("nomCte"));
+                objC.setDireccion(res.getString("direccion"));
+                objC.setTelCte(res.getString("telCte"));
+                objC.setEmailCte(res.getString("emailCte"));
+                listaC.add(objC);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listaC;
     }
 }
