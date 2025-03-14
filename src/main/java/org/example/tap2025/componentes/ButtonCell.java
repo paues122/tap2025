@@ -7,8 +7,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableCell;
+import org.example.tap2025.vistas.Cliente;
 
 import java.util.Optional;
+
 
 public class ButtonCell extends TableCell<ClientesDao,String> {
 
@@ -21,7 +23,7 @@ public class ButtonCell extends TableCell<ClientesDao,String> {
         btnCelda.setOnAction(event -> {
             ClientesDao objC = this.getTableView().getItems().get(this.getIndex());
             if( strLabelBtn.equals("Editar")){
-
+                new Cliente(this.getTableView(),objC);
             }else{
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Mensaje del Sistema :)");
